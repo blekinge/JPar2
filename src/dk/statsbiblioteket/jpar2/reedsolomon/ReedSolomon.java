@@ -1,5 +1,6 @@
 package dk.statsbiblioteket.jpar2.reedsolomon;
 
+import dk.statsbiblioteket.jpar2.byteutils.Bytes;
 import dk.statsbiblioteket.jpar2.reedsolomon.math.field.Field;
 import dk.statsbiblioteket.jpar2.reedsolomon.math.field.GaloisField;
 import dk.statsbiblioteket.jpar2.reedsolomon.math.matrix.DispersalMatrix;
@@ -40,11 +41,19 @@ public class ReedSolomon {
         
         int read = 0;
         while (read<slicesize){
-            Integer[] data = new Integer[ins.length];
+            Integer[] matrix = new Integer[ins.length];
             for (int i=0;i<ins.length;i++){
-                byte[] word = new byte[GaloisField.WordSize.EIGHT.]
-                ins[i].r
+                byte[] word = new byte[GaloisField.WordSize.EIGHT.getWidtBytes()];
+                ins[i].read(word);
+                matrix[i] = Bytes.asIntL(word, 0);
             }
+            Matrix<Integer, Field<Integer>> data =
+                    new Matrix<Integer, Field<Integer>>(matrix.length, 1, field,
+                                                        matrix);
+
+            Matrix<Integer, Field<Integer>> parity = Matrix.mult(disp, data, field);
+            
+            //now write out the contents again
             
         }
         
