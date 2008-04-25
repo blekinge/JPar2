@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="asger-36xsyv86r" name="javapar2.sets.RecoverySetTest" tests="1" time="0.078" timestamp="2008-03-16T13:20:13">
+  <properties>
+    <property name="default.javac.source" value="1.6" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="file.reference.slf4j-api-1.5.0.jar-1" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\slf4j-api-1.5.0.jar" />
+    <property name="libs.toplink.maven-pom" value="" />
+    <property name="javac.source" value="1.5" />
+    <property name="ant.file.JavaPar2" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\build.xml" />
+    <property name="netbeans.system_http_proxy" value="DIRECT" />
+    <property name="java.home" value="C:\Programmer\Java\jdk1.6.0_03\jre" />
+    <property name="test.src.dir" value="test\unit\src" />
+    <property name="file.reference.logback-classic-0.9.8.jar" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-classic-0.9.8.jar" />
+    <property name="libs.jaxws21.src" value="" />
+    <property name="javadoc.version" value="false" />
+    <property name="libs.CopyLibs.classpath" value="C:\Programmer\NetBeans 6.0\java1\ant\extra\org-netbeans-modules-java-j2seproject-copylibstask.jar" />
+    <property name="libs.javac-api.src" value="" />
+    <property name="java.endorsed.dirs" value="C:\Programmer\Java\jdk1.6.0_03\jre\lib\endorsed" />
+    <property name="libs.MySQLDriver.classpath" value="C:\Programmer\NetBeans 6.0\ide8\modules\ext\mysql-connector-java-5.0.7-bin.jar" />
+    <property name="libs.junit.maven-pom" value="" />
+    <property name="libs.PostgreSQLDriver.src" value="" />
+    <property name="src.dir" value="src" />
+    <property name="nbplatform.default.harness.dir" value="C:\Programmer\NetBeans 6.0/harness" />
+    <property name="debug-args-line" value="-Xdebug" />
+    <property name="netbeans.hash.code" value="unique=NB_JAVA0be019fae-2c3b-4b0c-8ca8-5f7e1f7c680c" />
+    <property name="build.sysclasspath" value="ignore" />
+    <property name="have.sources" value="true" />
+    <property name="includes" value="**/*.java" />
+    <property name="source.encoding" value="UTF-8" />
+    <property name="libs.jaxws21.classpath" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\activation.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\FastInfoset.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\http.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\api\jaxb-api.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\jaxb-impl.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\jaxb-xjc.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\api\jaxws-api.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\jaxws-rt.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\jaxws-tools.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\api\jsr173_api.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\api\jsr181-api.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\api\jsr250-api.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\api\saaj-api.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\saaj-impl.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\sjsxp.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\stax-ex.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\streambuffer.jar" />
+    <property name="libs.swing-app-framework.javadoc" value="C:\Programmer\NetBeans 6.0\java1\docs\appframework-1.0.3-doc.zip" />
+    <property name="sun.os.patch.level" value="Service Pack 2" />
+    <property name="java.vendor.url" value="http://java.sun.com/" />
+    <property name="file.reference.logback-core-0.9.8.jar" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-core-0.9.8.jar" />
+    <property name="java.version" value="1.6.0_03" />
+    <property name="libs.jaxb21.javadoc" value="" />
+    <property name="libs.Logback-0.9.8.classpath" value="lib/logback-access-0.9.8.jar;lib/logback-classic-0.9.8.jar;lib/logback-core-0.9.8.jar" />
+    <property name="javac.debug" value="true" />
+    <property name="org.openide.major.version" value="IDE/1" />
+    <property name="run.classpath" value="lib/commons-cli-1.1.jar;lib/logback-access-0.9.8.jar;lib/logback-classic-0.9.8.jar;lib/logback-core-0.9.8.jar;lib/slf4j-api-1.5.0.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\commons-cli-1.1.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-access-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-classic-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-core-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\slf4j-api-1.5.0.jar:build/classes" />
+    <property name="libs.PostgreSQLDriver.maven-pom" value="" />
+    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi" />
+    <property name="netbeans.autoupdate.variant" value="" />
+    <property name="libs.absolutelayout.javadoc" value="" />
+    <property name="libs.junit_4.maven-pom" value="" />
+    <property name="netbeans.buildnumber" value="200711261600" />
+    <property name="manifest.file" value="manifest.mf" />
+    <property name="libs.swing-app-framework.maven-pom" value="" />
+    <property name="user.name" value="Asger" />
+    <property name="manifest.available+main.class+mkdist.available" value="true" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="sun.jnu.encoding" value="Cp1252" />
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="application.vendor" value="Asger Blekinge-Rasmussen" />
+    <property name="jdk.home" value="C:\Programmer\Java\jdk1.6.0_03" />
+    <property name="lib.dir" value="lib" />
+    <property name="sun.awt.keepWorkingSetOnMinimize" value="true" />
+    <property name="netbeans.autoupdate.version" value="1.23" />
+    <property name="org.openide.TopManager" value="org.netbeans.core.NonGui" />
+    <property name="netbeans.dirs" value="C:\Programmer\NetBeans 6.0\nb6.0;C:\Programmer\NetBeans 6.0\ide8;C:\Programmer\NetBeans 6.0\java1;C:\Programmer\NetBeans 6.0\apisupport1;C:\Programmer\NetBeans 6.0\profiler2" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="javadoc.author" value="false" />
+    <property name="user.timezone" value="" />
+    <property name="netbeans.system_http_non_proxy_hosts" value="" />
+    <property name="manifest.available" value="true" />
+    <property name="libs.swing-layout.maven-pom" value="" />
+    <property name="libs.junit.javadoc" value="C:\Programmer\NetBeans 6.0\java1\docs\junit-3.8.2-api.zip" />
+    <property name="org.openide.specification.version" value="6.2" />
+    <property name="path.separator" value=";" />
+    <property name="version-output" value="java version &quot;1.6" />
+    <property name="libs.absolutelayout.classpath" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\AbsoluteLayout.jar" />
+    <property name="libs.JavaPar2Libs.classpath" value="lib/commons-cli-1.1.jar;lib/logback-access-0.9.8.jar;lib/logback-classic-0.9.8.jar;lib/logback-core-0.9.8.jar;lib/slf4j-api-1.5.0.jar" />
+    <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
+    <property name="file.encoding" value="Cp1252" />
+    <property name="dist.javadoc.dir" value="dist/javadoc" />
+    <property name="https.nonProxyHosts" value="localhost|127.0.0.1|asger-36xsyv86r" />
+    <property name="libs.junit.src" value="" />
+    <property name="libs.jaxb21.maven-pom" value="" />
+    <property name="ant.file" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\build.xml" />
+    <property name="libs.junit_4.src" value="" />
+    <property name="file.reference.JavaPar2-lib" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib" />
+    <property name="netbeans.autoupdate.language" value="da" />
+    <property name="do.jar" value="true" />
+    <property name="java.io.tmpdir" value="C:\DOCUME~1\Asger\LOKALE~1\Temp\" />
+    <property name="build.test.results.dir" value="build/test/results" />
+    <property name="user.language" value="da" />
+    <property name="line.separator" value="
+" />
+    <property name="user" value="Asger Blekinge-Rasmussen" />
+    <property name="apple.laf.useScreenMenuBar" value="true" />
+    <property name="libs.absolutelayout.src" value="" />
+    <property name="javac.compilerargs" value="-Xlint:unchecked" />
+    <property name="jar.compress" value="false" />
+    <property name="javac.compilerargs.jaxws" value="" />
+    <property name="tools.dir" value="tools" />
+    <property name="java.vm.info" value="mixed mode, sharing" />
+    <property name="libs.javac-api.maven-pom" value="" />
+    <property name="javadoc.private" value="false" />
+    <property name="sun.desktop" value="windows" />
+    <property name="build.test.classes.dir" value="build/test/classes" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="jaxws.endorsed.dir" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\api" />
+    <property name="libs.MySQLDriver.javadoc" value="" />
+    <property name="ant.file.JavaPar2-impl" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\nbproject\build-impl.xml" />
+    <property name="netbeans.dynamic.classpath" value="C:\Programmer\NetBeans 6.0\platform7\core\core.jar;C:\Programmer\NetBeans 6.0\platform7\core\org-openide-filesystems.jar;C:\Programmer\NetBeans 6.0\nb6.0\core\org-netbeans-upgrader.jar;C:\Programmer\NetBeans 6.0\nb6.0\core\locale\core_nb.jar" />
+    <property name="manifest.available+main.class" value="true" />
+    <property name="libs.beans-binding.javadoc" value="C:\Programmer\NetBeans 6.0\java1\docs\beansbinding-1.2.1-doc.zip" />
+    <property name="platform.active" value="default_platform" />
+    <property name="file.reference.commons-cli-1.1.jar-1" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\commons-cli-1.1.jar" />
+    <property name="http.nonProxyHosts" value="localhost|127.0.0.1|asger-36xsyv86r" />
+    <property name="libs.junit_4.javadoc" value="" />
+    <property name="dist.fatjar" value="dist/JavaPar2_fatjar.jar" />
+    <property name="netbeans.autoupdate.country" value="DK" />
+    <property name="libs.beans-binding.maven-pom" value="" />
+    <property name="javadoc.encoding" value="UTF-8" />
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob" />
+    <property name="dist.jar" value="dist/JavaPar2.jar" />
+    <property name="meta.inf.dir" value="src/META-INF" />
+    <property name="ant.version" value="Apache Ant version 1.7.0 compiled on December 13 2006" />
+    <property name="netbeans.home" value="C:\Programmer\NetBeans 6.0\platform7" />
+    <property name="javadoc.nonavbar" value="false" />
+    <property name="user.properties.file" value="C:\Documents and Settings\Asger\.netbeans\6.0\build.properties" />
+    <property name="libs.toplink.classpath" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\toplink\toplink-essentials.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\toplink\toplink-essentials-agent.jar" />
+    <property name="netbeans.importclass" value="org.netbeans.upgrade.AutoUpgrade" />
+    <property name="libs.CopyLibs.maven-pom" value="" />
+    <property name="build.generated.dir" value="build/generated" />
+    <property name="netbeans.home+have.tests" value="true" />
+    <property name="file.reference.commons-cli-1.1.jar" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\lib\commons-cli-1.1.jar" />
+    <property name="os.name" value="Windows XP" />
+    <property name="java.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="run.test.classpath" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\junit-3.8.2.jar:lib/commons-cli-1.1.jar;lib/logback-access-0.9.8.jar;lib/logback-classic-0.9.8.jar;lib/logback-core-0.9.8.jar;lib/slf4j-api-1.5.0.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\commons-cli-1.1.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-access-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-classic-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-core-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\slf4j-api-1.5.0.jar:build/classes:build/test/classes:lib/commons-cli-1.1.jar;lib/logback-access-0.9.8.jar;lib/logback-classic-0.9.8.jar;lib/logback-core-0.9.8.jar;lib/slf4j-api-1.5.0.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\commons-cli-1.1.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-access-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-classic-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-core-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\slf4j-api-1.5.0.jar:build/classes" />
+    <property name="java.vm.name" value="Java HotSpot(TM) Client VM" />
+    <property name="libs.CopyLibs.src" value="" />
+    <property name="libs.jaxb21.src" value="" />
+    <property name="org.openide.version" value="deprecated" />
+    <property name="libs.junit.classpath" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\junit-3.8.2.jar" />
+    <property name="libs.beans-binding.src" value="" />
+    <property name="java.library.path" value="C:\Programmer\Java\jdk1.6.0_03\jre\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Programmer\jEdit;$PATH;&quot;C:\Programmer\NetBeans 6.0\java1\ant\bin&quot;;&quot;C:\Programmer\Java\jdk1.6.0_03\bin&quot;" />
+    <property name="libs.PostgreSQLDriver.javadoc" value="" />
+    <property name="libs.toplink.javadoc" value="" />
+    <property name="ant.java.version" value="1.6" />
+    <property name="basedir" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2" />
+    <property name="javadoc.noindex" value="false" />
+    <property name="java.class.version" value="50.0" />
+    <property name="sun.awt.exception.handler" value="org.netbeans.core.startup.TopLogging$AWTHandler" />
+    <property name="javac.test.classpath" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\junit-3.8.2.jar:lib/commons-cli-1.1.jar;lib/logback-access-0.9.8.jar;lib/logback-classic-0.9.8.jar;lib/logback-core-0.9.8.jar;lib/slf4j-api-1.5.0.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\commons-cli-1.1.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-access-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-classic-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-core-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\slf4j-api-1.5.0.jar:build/classes" />
+    <property name="ant.home" value="C:\Programmer\NetBeans 6.0\java1\ant" />
+    <property name="file.reference.logback-access-0.9.8.jar" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-access-0.9.8.jar" />
+    <property name="javadoc.splitindex" value="true" />
+    <property name="libs.toplink.src" value="" />
+    <property name="libs.javac-api.javadoc" value="" />
+    <property name="javadoc.preview" value="true" />
+    <property name="libs.MySQLDriver.maven-pom" value="" />
+    <property name="libs.CopyLibs.javadoc" value="" />
+    <property name="libs.PostgreSQLDriver.classpath" value="C:\Programmer\NetBeans 6.0\ide8\modules\ext\postgresql-8.2-506.jdbc3.jar" />
+    <property name="libs.jaxws21.maven-pom" value="" />
+    <property name="libs.junit_4.classpath" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\junit-4.1.jar" />
+    <property name="sun.boot.library.path" value="C:\Programmer\Java\jdk1.6.0_03\jre\bin" />
+    <property name="build.dir" value="build" />
+    <property name="application.title" value="JavaPar2" />
+    <property name="sun.management.compiler" value="HotSpot Client Compiler" />
+    <property name="libs.swing-app-framework.classpath" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\appframework-1.0.3.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\swing-worker-1.1.jar" />
+    <property name="user.variant" value="" />
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment" />
+    <property name="javadoc.encoding.used" value="UTF-8" />
+    <property name="javadoc.windowtitle" value="" />
+    <property name="run.jvmargs" value="" />
+    <property name="file.reference.slf4j-api-1.5.0.jar" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\lib\slf4j-api-1.5.0.jar" />
+    <property name="build.compiler.emacs" value="true" />
+    <property name="ant.project.name" value="JavaPar2" />
+    <property name="libs.swing-layout.classpath" value="C:\Programmer\NetBeans 6.0\platform7\modules\ext\swing-layout-1.0.3.jar" />
+    <property name="org.openide.awt.SwingBrowserImpl.do-not-block-awt" value="false" />
+    <property name="java.vm.specification.version" value="1.0" />
+    <property name="work.dir" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2" />
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
+    <property name="javadoc.use" value="true" />
+    <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86" />
+    <property name="java.ext.dirs" value="C:\Programmer\Java\jdk1.6.0_03\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext" />
+    <property name="os.version" value="5.1" />
+    <property name="excludes" value="" />
+    <property name="user.home" value="C:\Documents and Settings\Asger" />
+    <property name="org.xml.sax.driver" value="com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser" />
+    <property name="libs.jaxb21.classpath" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\activation.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\api\jaxb-api.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\jaxb-impl.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\jaxb-xjc.jar;C:\Programmer\NetBeans 6.0\java1\modules\ext\jaxws21\api\jsr173_api.jar" />
+    <property name="javax.xml.parsers.DocumentBuilderFactory" value="org.netbeans.core.startup.DOMFactoryImpl" />
+    <property name="java.vm.vendor" value="Sun Microsystems Inc." />
+    <property name="libs.absolutelayout.maven-pom" value="" />
+    <property name="org.openide.TopManager.GUI" value="true" />
+    <property name="user.dir" value="C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2" />
+    <property name="application.args" value="" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="project.license" value="lgpl2.1" />
+    <property name="java.vm.version" value="1.6.0_03-b05" />
+    <property name="libs.MySQLDriver.src" value="" />
+    <property name="java.class.path" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\junit-3.8.2.jar;C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\commons-cli-1.1.jar;C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-access-0.9.8.jar;C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-classic-0.9.8.jar;C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-core-0.9.8.jar;C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\slf4j-api-1.5.0.jar;C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\build\classes;C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\build\test\classes;C:\Programmer\NetBeans 6.0\java1\ant\lib\ant-launcher.jar;C:\Programmer\NetBeans 6.0\java1\ant\lib\ant.jar;C:\Programmer\NetBeans 6.0\java1\ant\lib\ant-junit.jar" />
+    <property name="javax.xml.parsers.SAXParserFactory" value="org.netbeans.core.startup.SAXFactoryImpl" />
+    <property name="os.arch" value="x86" />
+    <property name="javac.deprecation" value="true" />
+    <property name="nbplatform.default.netbeans.dest.dir" value="C:\Programmer\NetBeans 6.0" />
+    <property name="build.classes.excludes" value="**/*.java,**/*.form" />
+    <property name="dist.dir" value="dist" />
+    <property name="netbeans.user" value="C:\Documents and Settings\Asger\.netbeans\6.0" />
+    <property name="debug.classpath" value="lib/commons-cli-1.1.jar;lib/logback-access-0.9.8.jar;lib/logback-classic-0.9.8.jar;lib/logback-core-0.9.8.jar;lib/slf4j-api-1.5.0.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\commons-cli-1.1.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-access-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-classic-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-core-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\slf4j-api-1.5.0.jar:build/classes" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="ant.core.lib" value="C:\Programmer\NetBeans 6.0\java1\ant\lib\ant.jar" />
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="do.depend" value="false" />
+    <property name="file.separator" value="\" />
+    <property name="java.runtime.version" value="1.6.0_03-b05" />
+    <property name="sun.boot.class.path" value="C:\Programmer\Java\jdk1.6.0_03\jre\lib\resources.jar;C:\Programmer\Java\jdk1.6.0_03\jre\lib\rt.jar;C:\Programmer\Java\jdk1.6.0_03\jre\lib\sunrsasign.jar;C:\Programmer\Java\jdk1.6.0_03\jre\lib\jsse.jar;C:\Programmer\Java\jdk1.6.0_03\jre\lib\jce.jar;C:\Programmer\Java\jdk1.6.0_03\jre\lib\charsets.jar;C:\Programmer\Java\jdk1.6.0_03\jre\classes" />
+    <property name="debug.test.classpath" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\junit-3.8.2.jar:lib/commons-cli-1.1.jar;lib/logback-access-0.9.8.jar;lib/logback-classic-0.9.8.jar;lib/logback-core-0.9.8.jar;lib/slf4j-api-1.5.0.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\commons-cli-1.1.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-access-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-classic-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-core-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\slf4j-api-1.5.0.jar:build/classes:build/test/classes:lib/commons-cli-1.1.jar;lib/logback-access-0.9.8.jar;lib/logback-classic-0.9.8.jar;lib/logback-core-0.9.8.jar;lib/slf4j-api-1.5.0.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\commons-cli-1.1.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-access-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-classic-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-core-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\slf4j-api-1.5.0.jar:build/classes" />
+    <property name="libs.beans-binding.classpath" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\beansbinding-1.2.1.jar" />
+    <property name="have.tests" value="true" />
+    <property name="main.class" value="javapar2.filecompare.FileCompare" />
+    <property name="java.util.logging.config.class" value="org.netbeans.core.startup.TopLogging" />
+    <property name="libs.javac-api.classpath" value="C:\Programmer\NetBeans 6.0\java1\modules\ext\javac-api.jar" />
+    <property name="user.country" value="DK" />
+    <property name="javadoc.notree" value="false" />
+    <property name="libs.jaxws21.javadoc" value="C:\Programmer\NetBeans 6.0\java1\docs\jaxws-2_1-api-doc.zip" />
+    <property name="default.javac.target" value="1.6" />
+    <property name="javadoc.additionalparam" value="-docfilessubdirs" />
+    <property name="javac.classpath" value="lib/commons-cli-1.1.jar;lib/logback-access-0.9.8.jar;lib/logback-classic-0.9.8.jar;lib/logback-core-0.9.8.jar;lib/slf4j-api-1.5.0.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\commons-cli-1.1.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-access-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-classic-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\logback-core-0.9.8.jar:C:\Documents and Settings\Asger\Dokumenter\NetBeansProjects\JavaPar2\JavaPar2\lib\slf4j-api-1.5.0.jar" />
+    <property name="build.classes.dir" value="build/classes" />
+    <property name="libs.swing-layout.javadoc" value="C:\Programmer\NetBeans 6.0\platform7\docs\swing-layout-1.0.3-doc.zip" />
+    <property name="libs.swing-layout.src" value="C:\Programmer\NetBeans 6.0\platform7\docs\swing-layout-1.0.3-src.zip" />
+    <property name="javac.target" value="1.6" />
+    <property name="java.vendor" value="Sun Microsystems Inc." />
+    <property name="libs.swing-app-framework.src" value="" />
+    <property name="java.specification.version" value="1.6" />
+    <property name="sun.arch.data.model" value="32" />
+  </properties>
+  <testcase classname="javapar2.sets.RecoverySetTest" name="testGenerateConstants" time="0.031" />
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

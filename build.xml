@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="JavaPar2" default="default" basedir=".">
+    <description>Builds, tests, and runs the project JavaPar2.</description>
+    <import file="nbproject/build-impl.xml"/>
+    
+    
+    
+    <!-- Override the javadoc target, to include one more depend-->
+    <target name="javadoc" depends="init,-javadoc-copy-doc-files,-javadoc-build,-javadoc-browse" description="Build Javadoc."/>
+    
+    <!-- The new depend, to copy any doc-files folders to the javadoc -->
+    <target name="-javadoc-copy-doc-files">
+        <copy todir="${dist.javadoc.dir}">
+            <fileset dir="${src.dir}">
+                <include name="**/doc-files/**"/>
+            </fileset>
+        </copy>
+    </target>
+    
+    
+    
+    
+    
+    
+    
+    <!-- define the task, after the properties files have been read -->
+    <target name="-post-init">
+        <taskdef name="one-jar" classname="com.simontuffs.onejar.ant.OneJarTask" 
+                 classpath="${tools.dir}/one-jar-ant-task-0.96.jar" onerror="report"/>
+    </target>
+
+    
+    <!-- make the new target -->
+    <target name="fatjar" depends="init,jar">
+        
+        <property name="temp.manifest.mf" value="${build.dir}/temp.manifest.mf"/>
+        <!-- one-jar requires a manifest FILE, so make on now -->
+        <manifest file="${temp.manifest.mf}">
+            <attribute name="One-Jar-Main-Class" value="${main.class}"/>
+        </manifest>
+        
+        <!-- Construct the One-JAR file -->   
+        <one-jar destfile="${dist.fatjar}" manifest="${temp.manifest.mf}">
+            <!-- include the output jar file, as the main jarfile -->
+            <main jar="${dist.jar}"/>
+            <!-- include all the jarfiles in lib -->
+            <lib>
+                <fileset dir="${lib.dir}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </lib>
+        </one-jar>
+        <!-- delete the temp manifest -->
+        <delete file="${temp.manifest.mf}"/>
+    </target>
+    
+    
+</project>

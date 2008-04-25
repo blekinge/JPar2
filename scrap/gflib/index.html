@@ -1,0 +1,323 @@
+<title>GFLIB - C Procedures for Galois Field Arithmetic and Reed-Solomon Coding</title>
+<body bgcolor=ffffff>
+<H2>GFLIB - C Procedures for Galois Field Arithmetic and Reed-Solomon Coding</H2>
+<i><a href=http://www.cs.utk.edu/~plank/>James S. Plank</a></i><br>
+<a href=http://loci.cs.utk.edu>Logistical Computing and Internetworking (LoCI) Laboratory</a><br>
+<a href=http://www.cs.utk.edu>Department of Computer Science</a><br>
+<a href=http://www.utk.edu>University of Tennessee</a><br>
+<p>
+June 4, 2003.
+$Revision$
+<p>
+This site: <i><a href=http://www.cs.utk.edu/~plank/plank/gflib/>
+http://www.cs.utk.edu/~plank/plank/gflib/</a></i>.
+<p>
+This web site contains C procedures for limited Galois Field arithmetic and Reed-Solomon 
+coding.  To make best use of this code, please read the following tutorial and accompanying
+note:
+<UL>
+<p>
+James S. Plank, ``<a href=http://www.cs.utk.edu/~plank/plank/papers/SPE-9-97.html>A
+Tutorial on Reed-Solomon Coding for Fault-Tolerance in RAID-like Systems</a>,''
+<i>Software -- Practice & Experience</i>, 27(9), September, 1997, pp. 995-1012. 
+<p>
+James S. Plank and Ying Ding, 
+  ``<a href=http://www.cs.utk.edu/~plank/plank/papers/CS-03-504.html>Note:
+Correction to the 1997 Tutorial on Reed-Solomon Coding</a>,''
+Technical Report UT-CS-03-504, University of Tennessee, April, 2003.
+<p>
+</UL>
+<hr>
+<h3>The Files</h3>
+<p>
+The code is available in the following two formats:
+<p>
+<OL>
+<LI> Tar file: <a href=gflib.tar><b>gflib.tar</b></a> 
+<LI> Shar file: <a href=gflib.shar><b>gflib.shar</b></a> 
+</OL>
+<p>
+These contain the following files:
+<p>
+<UL>
+<LI> <a href=gflib.h><b>gflib.h</a></b>:  Header file for the C procedures.
+<LI> <a href=gflib.c><b>gflib.c</a></b>:  Implementation file for the C procedures.
+<LI> <a href=gf_mult.c><b>gf_mult.c</a></b>: Simple program for multiplying two numbers in 
+     GF(2^8) or GF(2^16).
+<LI> <a href=gf_div.c><b>gf_div.c</a></b>: Simple program for dividing two numbers in 
+     GF(2^8) or GF(2^16). 
+<LI> <a href=xor.c><b>xor.c</a></b>: Simple program for adding/subtracting two numbers in 
+     GF(2^8) or GF(2^16).  Note, addition and subtraction in Galois Fields are 
+     both implemented with exclusive-or.
+<LI> <a href=parity_test.c><b>parity_test.c</a></b>: A program to test the speed of
+     parity operations.
+<LI> <a href=rs_encode_file.c><b>rs_encode_file.c</a></b>: A program that uses
+     <b>gflib.c</b> to encode a file using Reed-Solomon coding.
+<LI> <a href=rs_decode_file.c><b>rs_decode_file.c</a></b>: A program that uses
+     <b>gflib.c</b> to decode a file from the chunks created by <b>rs_encode_file</b>.
+<LI> <a href=makefile><b>makefile</a></b>: The makefile.
+<LI> <a href=index.html><b>index.html</a></b>: This file.
+</UL>
+<p>
+<hr>
+<h3>Limitations</h3>
+<p>
+Above, it says ``limited'' Galois Field arithmetic and Reed-Solomon 
+coding.  This is because the arithmetic and coding are limited to GF(2^8) and GF(2^16).
+Using GF(2^8) is much faster than GF(2^16), since the internal data structures are 
+smaller, and this allows for an optimization for multiplication/division.  
+However, using GF(2^8) limits the coding to 255 total chunks (data plus
+coding).  While this should be adequate for most usage scenarios, GF(2^16) may be
+employed for larger numbers of chunks (up to 65536).  
+<p>
+<hr>
+<h3>Compilation</h3>
+<p>
+Compile the code with one of two arguments to <b>make</b>:
+<UL>
+<LI> <tt> make w8</tt> -- for GF(2^8).
+<LI> <tt> make w16</tt> -- for GF(2^16).
+</UL>
+This will create the object file <b>gflib.o</b>, and the programs
+<b>gf_mult</b>, <b>gf_div</b>, <b>xor</b>, <b>parity_test</b>, 
+<b>rs_encode_file</b> and <b>rs_decode_file</b>.
+<p>
+To use the procedures in <b>gflib.c</b>, include <b>gflib.h</b> and
+compile with <b>gflib.o</b>.
+<p>
+There should be no other dependencies in using this code.
+<p>
+<hr>
+<h3>Thread Safety</h3>
+<p>
+The only call that should be protected is <b>gf_modar_setup</b>.  After
+that, there should be no race conditions in any of the calls.
+
+<hr>
+<h3>The Procedures In gflib.c</h3>
+<p>
+Note, with the exception of <b>gf_add_parity()</b>, none of these routines check
+their input values.  This is for speed.  If input checks are desired, you will have
+to write them yourself.
+<UL>
+<LI> <b>void gf_modar_setup()</b>: This sets up the internal data structures.  It is called
+automatically by all the procedures below, and therefore does not need to be called
+explicitly.  However, as it does do some processing (not much), and should be protected
+in a threaded system, it may be called explicitly.
+<p>
+<LI> <b>int gf_single_multiply(int a, int b)</b>: This multiplies two numbers and returns
+the result.  Note, as stated above, 
+this does not check the input values to see if they are in the 
+correct range (0-255 for GF(2^8) and 0-65535 for GF(2^16)).
+<p>
+<LI> <b>int gf_single_divide(int a, int b)</b>: This divides <i>a</i> by <i>b</i> 
+and returns the result.
+<p>
+<LI> <b>void gf_add_parity(void *to_add, void *to_modify, int size)</b>: This works just
+   This calculates the parity of two memory regions, <i>to_add</i> and <i>to_modify</i>, 
+   both consisting of <i>size</i> bytes, and puts the result in <i>to_modify</i>.
+<p>
+<i><b><u>Important:</u></b></i> <b>gf_add_parity()</b> assumes that both 
+<i>to_add</i> and <i>to_modify</i> are aligned on the same byte boundary with respect
+to <b>long</b>s.  In other words, <i>to_add</i>%<b>sizeof(long)</b> must 
+equal <i>to_modify</i>%<b>sizeof(long)</b>.  
+If both are pointers that have been allocated with <b>malloc()</b>, then they will
+be fine.  If they are not aligned on the same byte boundary, <b>gf_add_parity()</b>
+will flag an error and exit the program.  If <b>gf_add_parity()</b>, does not 
+flag an error, then you may assume that it worked correctly.  
+<p>
+The reason that <i>to_add</i> and <i>to_modify</i> must be aligned to each other is
+that <b>gf_add_parity()</b> calls <b>gf_fast_add_parity()</b> below, and if they are
+not aligned, the parity operation will be brutally slow.  Thus, it is not allowed.
+
+<LI> <b>void gf_fast_add_parity(void *to_add, void *to_modify, int size)</b>: 
+   This calculates the parity of two memory regions, <i>to_add</i> and <i>to_modify</i>, 
+   both consisting of <i>size</i> bytes, and puts the result in <i>to_modify</i>.
+<p>
+<i><b><u>Important:</u></b></i> <b>gf_fast_add_parity()</b> assumes that both 
+<i>to_add</i> and <i>to_modify</i> are aligned on <b>long</b> boundaries, and that
+<i>size</i> is a multiple of <b>sizeof(long)</b>.  Otherwise, 
+you won't get the results that you expect.  The reason <b>gf_fast_add_parity()</b> is
+fast is that it performs exclusive-or on long words rather than bytes.  To 
+perform exclusive-or on bytes, use <b>gf_add_parity()</b>, which calls this 
+routine where possible.
+<p>
+<LI><b>void gf_mult_region(void *region, int size, int factor)</b>: This multiplies
+every word (1 byte in GF(2^8), 2 bytes in GF(2^16)) in <i>region</i> by <i>factor</i>.
+<i>Size</i> defines the number of bytes in <i>region</i>.
+<i>Region</i> is overwritten.  However, if <i>factor</i> is not zero, then you 
+may restore the <i>region</i> by calling:
+<pre>
+gf_mult_region(region, size, gf_single_divide(1, factor))
+</pre>
+Cool, no?
+<p>
+<LI> <b>int *gf_make_vandermonde(int rows, int cols)</b>:  This allocates and
+returns a <i>rows</i> by <i>cols</i> Vandermonde matrix.  You do not need to 
+call this explicitly to perform Reed-Solomon coding, but in case you want to
+see a Vandermonde matrix, you can use this.  <i>Rows</i> and <i>cols</i> must
+be less than 256 for GF(2^8) and 65536 for GF(2^16).  
+<p>
+The matrix returned is a <i>rows*cols</i> array.  You may access element
+(<i>i,j</i>) at matrix element <i>i*cols+j</i>.
+<p>
+<LI> <b>int *gf_make_dispersal_matrix(int rows, int cols)</b>:  This allocates and
+returns a <i>rows</i> by <i>cols</i> dispersal matrix for Reed-Solomon coding.
+This is the matrix <i>B</i> in the paper `` Note: Correction to the 1997 Tutorial 
+on Reed-Solomon Coding.''  <i>Rows</i> and <i>cols</i> must
+be less than 256 for GF(2^8) and 65536 for GF(2^16). 
+<p>
+The matrix returned is a <i>rows*cols</i> array.  You may access element
+(<i>i,j</i>) at matrix element <i>i*cols+j</i>.
+<p>
+<LI> <b>Condensed_Matrix *gf_condense_dispersal_matrix(int *disp, 
+                        int *existing_rows,
+                        int rows, 
+                        int  cols)</b>:  When you need to decode, you must
+delete rows of the dispersal matrix, according to which chunks you do not have.
+The resulting matrix may be used to recalculate the missing chunks.  This 
+procedure does the deleting.  <i>Disp</i> is the original dispersal
+matrix, returned from <b>gf_make_dispersal_matrix(int rows, int cols)</b>.
+<i>Existing_rows</i> is an array with <i>rows</i> elements, containing 
+zeros and ones.  Element <i>i</i> should contain one if you have chunk <i>i</i>.
+Element <i>i</i> should contain zero if you are missing chunk <i>i</i>.
+<p>
+This procedure allocates and returns a <b>Condensed_Matrix</b>, defined as
+follows:
+<pre>
+typedef struct {
+  int *condensed_matrix;   /* The n*n dispersal matrix with rows deleted */
+  int *row_identities;     /* A nx1 vector of the original row identities of the cond_matrix */
+} Condensed_Matrix;
+</pre>
+Note, you always get a <i>rows*rows</i> matrix as a result of 
+<b>gf_condense_dispersal_matrix()</b>, even if no rows need to be deleted.  
+<i>Row_identities</i> tells you which rows are left in the condensed matrix.
+<p>
+<LI> <b>int *gf_invert_matrix(int *mat, int rows)</b>.  This inverts the square
+matrix <i>mat</i>.  This is not destructive:  the inverted matrix is allocated
+and returned.  
+<p>
+<LI> <b>int *gf_matrix_multiply(int *a, int *b, int rows)</b>.  This is not a necessary
+routine, but it's helpful for ensuring that things work right.  It multiplies two 
+square matrices and returns the result.  The following call should return the
+identity matrix:
+<pre>
+   gf_matrix_multiply(gf_invert_matrix(mat, rows), mat, rows)
+</pre>
+<p>
+<LI> <b>void gf_write_matrix(FILE *f, int *a, int rows, int cols)</b>: Save a matrix to a file.
+<p>
+<LI> <b>int *gf_read_matrix(FILE *f, int *rows, int *cols)</b>: Read a matrix from a file.
+</UL>
+<p>
+<hr>
+<h3>The Programs</h3>
+
+<b>Gf_mult</b>, <b>gf_div</b>, <b>xor</b> are completely straightforward.
+<p>
+<b>Parity_test</b> allocates two random regions and performs a specified number
+of parity operations on them.  This allows you to test the speed of your system
+doing parity.
+<p>
+<b>Rs_encode_file</b> and <b>rs_decode_file</b> and the two non-trivial programs.  
+<b>Rs_encode_file</b> is called with the following arguments:
+<pre>
+   rs_encode_file filename n m stem
+</pre>
+It takes the file <b>filename</b> and breaks it up into <i>n</i> data chunks and
+<i>m</i> coding chunks.  The size of the chunks will be padded so that the
+operations work correctly (chunk size times <i>n</i> is a multiple of the word
+size).  It stores the chunks in the files <i>stem</i>-<i>xxxx</i><b>.rs</b>, where
+<i>xxxx</i> is the chunk number.  Chunks 0 through <i>n-1</i> are the data chunks
+and chunks <i>n</i> through <i>n+m-1</i> are the coding chunks.  It also 
+stores a file called <i>stem</i><b>-info.txt</b> that contains the dispersal matrix
+plus some other information for the decoding.  Note, you could recreate the dispersal
+matrix rather than read it in.
+<p>
+<b>Rs_decode_file</b> is called with the following argument:
+<pre>
+   rs_decode_file stem
+</pre>
+As long as <i>stem</i><b>-info.txt</b> and any <i>n</i> chunks exist, it will
+recreate the original file and write it to standard output.
+<p>
+So, try the following to make sure it works.  Encode the file <b>gf_mult.c</b> into
+five data and four coding chunks:
+<pre>
+UNIX> <b>rs_encode_file gf_mult.c 5 4 code</b>
+Writing code-0000.rs ... Done
+Writing code-0001.rs ... Done
+Writing code-0002.rs ... Done
+Writing code-0003.rs ... Done
+Writing code-0004.rs ... Done
+Calculating  code-0005.rs ... writing  ... Done
+Calculating  code-0006.rs ... writing  ... Done
+Calculating  code-0007.rs ... writing  ... Done
+Calculating  code-0008.rs ... writing  ... Done
+</pre>
+You'll see that 9 chunks and the info file are created:
+<pre>
+UNIX> <b> ls -l code*</b>
+-rw-r--r--    1 plank    staff          78 Jun  4 10:29 code-0000.rs
+-rw-r--r--    1 plank    staff          78 Jun  4 10:29 code-0001.rs
+-rw-r--r--    1 plank    staff          78 Jun  4 10:29 code-0002.rs
+-rw-r--r--    1 plank    staff          78 Jun  4 10:29 code-0003.rs
+-rw-r--r--    1 plank    staff          78 Jun  4 10:29 code-0004.rs
+-rw-r--r--    1 plank    staff          78 Jun  4 10:29 code-0005.rs
+-rw-r--r--    1 plank    staff          78 Jun  4 10:29 code-0006.rs
+-rw-r--r--    1 plank    staff          78 Jun  4 10:29 code-0007.rs
+-rw-r--r--    1 plank    staff          78 Jun  4 10:29 code-0008.rs
+-rw-r--r--    1 plank    staff         120 Jun  4 10:29 code-info.txt
+</pre>
+Now, remove four of the chunks -- this removes three data and one coding chunk:
+<pre>
+UNIX> <b> rm code-0000.rs code-0002.rs code-0004.rs code-0006.rs</b>
+</pre>
+And finally, decode the file.  Note, a bunch of info is printed to 
+standard error:
+<pre>
+UNIX> <b> rs_decode_file code > tmp</b>
+Blocks to decode: 3
+Inverting condensed dispersal matrix ... Done
+
+Condensed matrix:
+
+   7   7   6   6   1
+   0   1   0   0   0
+  15  14  14  15   1
+   0   0   0   1   0
+   2 125 149 253  22
+
+Inverted matrix:
+
+ 182 143 122  22  84
+   0   1   0   0   0
+  27  35 215 186  84
+   0   0   0   1   0
+ 126  71 179 223  84
+Decoding block 0 ... writing ... Done
+Writing block 1 from memory ... Done
+Decoding block 2 ... writing ... Done
+Writing block 3 from memory ... Done
+Decoding block 4 ... writing ... Done
+</pre>
+As you can see, <b>tmp</b> and <b>gf_mult.c</b> are identical:
+<pre>
+UNIX> <b> diff tmp gf_mult.c</b>
+</pre>
+<p>
+<i>Caveats and subtleties</i>:
+<p>
+<b>rs_encode_matrix</b> reads the entire file into memory, and holds <i>n</i>+1 chunks
+in memory -- the <i>n</i> data blocks, and each coding block as it is calculated.
+Obviously, there are other ways to do this.  
+<p>
+Each coding block is the sum of each data block times a factor.  In order to do
+this, <b>rs_encode_matrix</b> calls <b>gf_multiply_region</b> and overwrites
+the data block with a factor times the data block.  This factor is stored
+in the array <b>factors</b>.  When a data block multiplied by factor <i>f</i>
+needs to be multiplied by factor <i>g</i>, the block is multiplied by <i>g/f</i>.
+<p>
+Similarly, <b>rs_decode_matrix</b> holds <i>n</i>+1 blocks in memory and uses
+a <b>factors</b> array in the same manner as <b>rs_encode_matrix</b>.

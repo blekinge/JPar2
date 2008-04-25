@@ -1,0 +1,20 @@
+<html>
+  <head>
+  </head>
+  <body>
+  Package containing the java representation of the par2 packets.
+  <p>
+      The package contain the generic packet, and the standard subtypes of it. 
+      After having read a file into a ByteBuffer, feed the Buffer to the 
+      UnparsedPacket constructor to load a packet. You can do this in a loop, to
+      read all the packets stored in a file.<br>
+      The contents of the packet are read in and stored, but they are not parsed
+      in this process. Only the generic header is parsed.<br>
+      Once the UnparsedPacket is made, the type can be determined, and it can be
+      "cast" into one of the subtypes. In this process, the previously stored 
+      content of the packet is parsed.<br>
+      For more info on the structure of the packets, see 
+      <a href="../doc-files/par2spec.html">The Par2 specification</a>
+  </p>
+  </body>
+</html>
