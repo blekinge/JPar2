@@ -26,7 +26,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
-import dk.statsbiblioteket.jpar2.math.field.GaloisField;
+import dk.statsbiblioteket.jpar2.reedsolomon.math.field.GaloisField;
 import dk.statsbiblioteket.jpar2.files.DataFile;
 import dk.statsbiblioteket.jpar2.checksum.MD5;
 import junit.framework.TestCase;

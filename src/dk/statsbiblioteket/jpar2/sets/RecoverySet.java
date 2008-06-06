@@ -22,7 +22,7 @@ import java.util.Set;
 
 import dk.statsbiblioteket.jpar2.files.DataFile;
 import dk.statsbiblioteket.jpar2.files.RecoveryData;
-import dk.statsbiblioteket.jpar2.math.field.GaloisField;
+import dk.statsbiblioteket.jpar2.reedsolomon.math.field.GaloisField;
 
 /**
  * The class used to perform recovery operations on a Par2Set

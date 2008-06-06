@@ -42,7 +42,7 @@ public class Bytes {
     }
 
     private static long parse(byte b0, byte b1, byte b2, byte b3, byte b4,
-            byte b5, byte b6, byte b7) {
+                                byte b5, byte b6, byte b7) {
         return ((((long) b7 & 0xff) << 56) |
                 (((long) b6 & 0xff) << 48) |
                 (((long) b5 & 0xff) << 40) |
@@ -97,6 +97,18 @@ public class Bytes {
         }
     }
 
+    public static short asShortL(byte[] bytes) {
+        return asShortL(bytes, 0);
+    }
+
+    public static short asShortB(byte[] bytes) {
+        return asShortB(bytes, 0);
+    }
+
+    public static short asShort(byte[] bytes, boolean bigEndian) {
+        return asShort(bytes, 0, bigEndian);
+    }
+
     /**
      * Parse the first 4 bytes after offset in bytes, as an int, using big
      * endian
@@ -148,6 +160,18 @@ public class Bytes {
 
     }
 
+    public static int asIntL(byte[] bytes) {
+        return asIntL(bytes, 0);
+    }
+
+    public static int asIntB(byte[] bytes) {
+        return asIntB(bytes, 0);
+    }
+
+    public static int asInt(byte[] bytes, boolean bigEndian) {
+        return asInt(bytes, 0, bigEndian);
+    }
+
     /**
      * Parse the first 8 bytes after offset in bytes, as a long, using big
      * endian
@@ -189,6 +213,14 @@ public class Bytes {
 
     }
 
+    public static long asLongL(byte[] bytes) {
+        return asLongL(bytes, 0);
+    }
+
+    public static long asLongB(byte[] bytes) {
+        return asLongB(bytes, 0);
+    }
+
     /**
      * Parse the first 8 bytes after offset in bytes, as a long, according to 
      * bigEndian
@@ -206,6 +238,10 @@ public class Bytes {
             return asLongL(bytes, offset);
 
         }
+    }
+
+    public static long asLong(byte[] bytes, boolean bigEndian) {
+        return asLong(bytes, 0, bigEndian);
     }
 
     /**
@@ -236,6 +272,26 @@ public class Bytes {
         return target;
     }
 
+    public static byte[] toBytesL(short value) {
+        byte[] target = new byte[2];
+        return toBytesL(value, target, 0);
+
+    }
+
+    public static byte[] toBytesB(short value) {
+        byte[] target = new byte[2];
+        return toBytesB(value, target, 0);
+
+    }
+
+    public static byte[] toBytes(short value, boolean bigEndian) {
+        if (bigEndian) {
+            return toBytesB(value);
+        } else {
+            return toBytesL(value);
+        }
+    }
+
     /**
      * Stores the value as 2 bytes from offset and onwards in target, according
      * to bigEndian
@@ -246,7 +302,7 @@ public class Bytes {
      * @return target
      */
     public static byte[] toBytes(short value, byte[] target, int offset,
-            boolean bigEndian) {
+                                   boolean bigEndian) {
         if (bigEndian) {
             return toBytesB(value, target, offset);
         } else {
@@ -264,12 +320,32 @@ public class Bytes {
      * @return target
      */
     public static byte[] toBytes(int value, byte[] target, int offset,
-            boolean bigEndian) {
+                                   boolean bigEndian) {
         if (bigEndian) {
             return toBytesB(value, target, offset);
         } else {
             return toBytesL(value, target, offset);
         }
+    }
+
+    public static byte[] toBytes(int value, boolean bigEndian) {
+        if (bigEndian) {
+            return toBytesB(value);
+        } else {
+            return toBytesL(value);
+        }
+    }
+
+    public static byte[] toBytesB(int value) {
+        byte[] target = new byte[4];
+        return toBytesB(value, target, 0);
+
+    }
+
+    public static byte[] toBytesL(int value) {
+        byte[] target = new byte[4];
+        return toBytesL(value, target, 0);
+
     }
 
     /**
@@ -346,6 +422,24 @@ public class Bytes {
 
     }
 
+    public static byte[] toBytesL(long value) {
+        byte[] target = new byte[8];
+        return toBytesL(value, target, 0);
+    }
+
+    public static byte[] toBytesB(long value) {
+        byte[] target = new byte[8];
+        return toBytesB(value, target, 0);
+    }
+
+    public static byte[] toBytes(long value, boolean bigEndian) {
+        if (bigEndian) {
+            return toBytesB(value);
+        } else {
+            return toBytesL(value);
+        }
+    }
+
     /**
      * Stores the value as 8 bytes from offset and onwards in target, according
      * to bigEndian
@@ -356,7 +450,7 @@ public class Bytes {
      * @return target
      */
     public static byte[] toBytes(long value, byte[] target, int offset,
-            boolean bigEndian) {
+                                   boolean bigEndian) {
         if (bigEndian) {
             return toBytesB(value, target, offset);
         } else {

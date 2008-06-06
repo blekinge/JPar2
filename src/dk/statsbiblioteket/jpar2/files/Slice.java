@@ -39,6 +39,10 @@ public class Slice {
     private boolean storeSlice;
     private SoftReference<byte[]> slice;
 
+    
+    
+    
+    
     /**
      * Create a new slice, for this part of the file. No data will be read now.
      * @param file The file to slice
