@@ -2,6 +2,7 @@ package dk.statsbiblioteket.jpar2.reedsolomon;
 
 import dk.statsbiblioteket.jpar2.byteutils.Bytes;
 import dk.statsbiblioteket.jpar2.files.DataSlice;
+import dk.statsbiblioteket.jpar2.files.Par2File;
 import dk.statsbiblioteket.jpar2.files.Par2Slice;
 import dk.statsbiblioteket.jpar2.reedsolomon.math.field.Field;
 import dk.statsbiblioteket.jpar2.reedsolomon.math.field.GaloisField;
@@ -10,6 +11,7 @@ import dk.statsbiblioteket.jpar2.reedsolomon.math.matrix.DispersalMatrix;
 import dk.statsbiblioteket.jpar2.reedsolomon.math.matrix.Matrix;
 import dk.statsbiblioteket.jpar2.reedsolomon.math.matrix.MatrixException;
 import dk.statsbiblioteket.jpar2.reedsolomon.math.matrix.NotRecoverableException;
+import dk.statsbiblioteket.jpar2.reedsolomon.math.matrix.Vector;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStream;
@@ -17,6 +19,7 @@ import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -52,39 +55,25 @@ public class ReedSolomon {
     public void addLostSlice(Par2Slice e) {
         dataSlices.add(e);
         lostSlices.add(dataSlices.indexOf(e));
+    }
 
-
+    public boolean addDataFile(Par2File e) throws IOException{
+        return dataSlices.addAll(Arrays.asList(e.getSlices()));
     }
     
+    public boolean addParityFile(Par2File e) throws IOException{
+        return paritySlices.addAll(Arrays.asList(e.getSlices()));
+    }
     
-    
-    private Matrix<Integer,Field<Integer>> createDataMatrix(){
-        
-
-        Matrix<Integer, Field<Integer>> data =
-                new Matrix<Integer, Field<Integer>>(
-                dataSlices.size(),
-                columns,
-                field);
-
-        for (int i = 0; i < data.getRows(); i++) {
-            for (int j = 0; j < data.getCols(); j++) {
-                if (lostSlices.contains(i)) {
-                    
-
-                } else {
-                    byte[] h = new byte[2];
-                    dataSlices.get(i).read(h);
-                    short h2 = Bytes.asShortB(h);
-                    data.set(i, j, new Integer(h2));
-
-
-                }
-            }
+    public void addLostFile(Par2File e) throws IOException {
+        List<Par2Slice> sliceList = Arrays.asList(e.getSlices());
+        for (Par2Slice slice: sliceList){
+            dataSlices.add(slice);
+            lostSlices.add(dataSlices.indexOf(slice));
         }
-        
-        
     }
+
+  
 
     public void recoverLostSlices() throws MatrixException,
                                             NotRecoverableException, IOException {
@@ -123,120 +112,56 @@ public class ReedSolomon {
 
 
 
-        for (int j = 0; j < slices.size(); j++) {
-            slices.get(j).reset();
-            for (int i = 0; i < colums; i++) {
-                byte[] word = new byte[2];//TODO: hardcoded
-                slices.get(j).read(word);
-                matrix.set(j, i, new Integer(Bytes.asShortB(word)));
-            }
-        }
-        return matrix;
 
 
-        System.out.println(data);
+        Matrix<Integer, Field<Integer>> data = readMatrixFromSlices(dataSlices,
+                                                                    columns);
 
-        Matrix<Integer, Field<Integer>> parity = Matrix.mult(disp, data,
-                                                             field);
+        Matrix<Integer, Field<Integer>> parity =
+                readMatrixFromSlices(paritySlices, columns);
 
-        System.out.println(parity);
-
-
-        Integer[] matrix2 = new Integer[dataSlices.size()];
-
-        for (int i = 0; i < matrix2.length; i++) {
-            matrix2[i] = parity.get(0, id[i]);
+        if (lostSlices.size() > paritySlices.size()) {
+            return;
         }
 
+        int parityIndex = 0;
+        for (int lostindex : lostSlices) {
+            data.setRow(lostindex, parity.getRow(parityIndex));
+            parityIndex++;
+        }
 
-        Matrix<Integer, Field<Integer>> toRestore =
-                new Matrix<Integer, Field<Integer>>(data.getRows(),
-                                                    data.getCols(), field,
-                                                    matrix2);
+        Matrix<Integer, Field<Integer>> restored =
+                Matrix.mult(cond, data, field);
 
-
-        Matrix<Integer, Field<Integer>> restored = Matrix.mult(cond, toRestore,
-                                                               field);
-
-        System.out.println(cond);
-
-        System.out.println(toRestore);
-
-        System.out.println(restored);
-
-//        assertEquals(restored, data);
+        writeSlicesFromMatrix(restored, present);
 
 
 
     }
 
-    public void generateParitySlices() throws MatrixException, IOException {
-        //Assume now that the ins is all the datastreams from the content
+    public void writeSlicesFromMatrix(Matrix<Integer, Field<Integer>> data,
+                                       List<Boolean> present) throws IOException {
 
+        for (int rowIndex = 0; rowIndex < data.getRows(); rowIndex++) {
 
-        //TODO: if lostSlices contain something, problem;
+            if (present.get(rowIndex)){
+                continue; //Slice was not lost, only write out the lost slices
+            }
+            Vector<Integer> row = data.getRow(rowIndex);
+            Par2Slice slice = dataSlices.get(rowIndex);
 
-
-        Matrix<Integer, Field<Integer>> disp =
-                new DispersalMatrix(
-                dataSlices.size() + paritySlices.size(),
-                dataSlices.size(),
-                field);
-        System.out.println(disp);
-
-        int columns = (int) (slicesize / 2);
-
-        Matrix<Integer, Field<Integer>> data =
-                readMatrixFromSlices(dataSlices, columns);
-
-        System.out.println(data);
-        Matrix<Integer, Field<Integer>> parity = Matrix.mult(disp, data,
-                                                             field);
-
-        System.out.println(parity);
-
-
-
-        for (int i = 0; i < paritySlices.size(); i++) {//row number
-
-            for (int j = 0; j < columns; j++) {//column number
-
-                //now write out the contents again
-
-                Integer part = parity.get(i + dataSlices.size(), j);
-
-                byte[] blah = Bytes.toBytesB(part.shortValue());
-
-                paritySlices.get(i).write(blah);
-
-
+            slice.reset();
+            for (int i = 0; i < row.length(); i++) {
+                Integer word = row.get(i);
+                
+                
+                byte[] wordbytes = Bytes.toBytesB(word.shortValue());
+                slice.write(wordbytes);
             }
         }
-
     }
 
-    private Matrix<Integer, Field<Integer>> readMatrixFromSlices(
-            List<Par2Slice> slices,
-            int colums) throws IOException {
-        Matrix<Integer, Field<Integer>> matrix =
-                new Matrix<Integer, Field<Integer>>(
-                slices.size(),
-                colums,
-                field);
-
-
-        for (int j = 0; j < slices.size(); j++) {
-            slices.get(j).reset();
-            for (int i = 0; i < colums; i++) {
-                byte[] word = new byte[2];//TODO: hardcoded
-                slices.get(j).read(word);
-                matrix.set(j, i, new Integer(Bytes.asShortB(word)));
-            }
-        }
-        return matrix;
-
-    }
-//    
+    //    
 //    
 //        public void testRecovery() throws MatrixDimensionException, MatrixException,
 //            NotRecoverableException {
@@ -324,4 +249,91 @@ public class ReedSolomon {
 //
 //    }
 //        
+    /**
+     * Recalculates all the parity slices. Discards the contents of all parity
+     * slices, and recalculates it based on the data slices.
+     * @throws dk.statsbiblioteket.jpar2.reedsolomon.math.matrix.MatrixException
+     * @throws java.io.IOException
+     */
+    public void generateParitySlices() throws MatrixException, IOException {
+        //Assume now that the ins is all the datastreams from the content
+
+
+        //TODO: if lostSlices contain something, problem;
+
+
+        Matrix<Integer, Field<Integer>> disp =
+                new DispersalMatrix(
+                dataSlices.size() + paritySlices.size(),
+                dataSlices.size(),
+                field);
+        System.out.println(disp);
+
+        int columns = (int) (slicesize / 2);
+
+        Matrix<Integer, Field<Integer>> data =
+                readMatrixFromSlices(dataSlices, columns);
+
+        System.out.println(data);
+        Matrix<Integer, Field<Integer>> parity = Matrix.mult(disp, data,
+                                                             field);
+
+        System.out.println(parity);
+
+
+
+        for (int i = 0; i < paritySlices.size(); i++) {//row number
+
+            for (int j = 0; j < columns; j++) {//column number
+
+                //now write out the contents again
+
+                Integer part = parity.get(i + dataSlices.size(), j);
+
+                byte[] blah = Bytes.toBytesB(part.shortValue());
+
+                paritySlices.get(i).write(blah);
+
+
+            }
+        }
+
+    }
+
+    /**
+     * Creates the datamatrix. A data matrix is a NxM matrix, where N (rows) is 
+     * the number of data slices, and M is the number of 2-byte words in a slice.
+     * @return
+     */
+    private Matrix<Integer, Field<Integer>> readMatrixFromSlices(
+            List<Par2Slice> slices,
+            int colums) throws IOException {
+        Matrix<Integer, Field<Integer>> matrix =
+                new Matrix<Integer, Field<Integer>>(
+                slices.size(),
+                colums,
+                field);
+
+
+        for (int j = 0; j < slices.size(); j++) {
+            slices.get(j).reset();
+            for (int i = 0; i < colums; i++) {
+                byte[] word = new byte[2];//TODO: hardcoded
+                slices.get(j).read(word);
+                int wordshort = unsign(Bytes.asShortB(word));
+                matrix.set(j, i, wordshort);
+            }
+        }
+        return matrix;
+
+    }
+    
+    private int unsign(short signed){
+        if (signed <0){
+            int b = (1 << 16) + signed;
+            return b;
+        }else{
+            return signed;
+        }
+    }
 }

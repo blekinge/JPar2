@@ -25,11 +25,14 @@ import java.util.Arrays;
  *
  * @author Asger Blekinge-Rasmussen
  */
-public abstract class BackingMatrix<E extends Number> {
+public abstract class BackingMatrix<N extends Number> {
     
-    private Object[] matrix;
     private int rows;
     private int cols;
+    
+    private Object[][] matrix;
+    
+
 
     
     /**
@@ -41,7 +44,7 @@ public abstract class BackingMatrix<E extends Number> {
     @SuppressWarnings("unchecked")
     protected  BackingMatrix(int rows, int cols) {
         //matrixlist = new ArrayList<E>(rows*cols);
-        matrix = new Object[rows * cols];//hack that produces warning, in order to make array
+        matrix = new Object[rows][cols];//hack that produces warning, in order to make array
         this.cols = cols;
         this.rows = rows;
     }
@@ -55,8 +58,11 @@ public abstract class BackingMatrix<E extends Number> {
      * @param matrix The backing array
      * @throws MatrixDimensionException if the backing array have the wrong size
      */
-    protected BackingMatrix(int rows, int cols, Object[] matrix) throws MatrixDimensionException {
-        if (matrix.length != rows*cols){
+    protected BackingMatrix(int rows, int cols, Object[][] matrix) throws MatrixDimensionException {
+        if (matrix.length != rows){
+            throw new MatrixDimensionException("The backing array does not match the specified dimensions");
+        }
+        if (matrix[0].length != cols){
             throw new MatrixDimensionException("The backing array does not match the specified dimensions");
         }
         this.matrix = matrix;
@@ -65,7 +71,7 @@ public abstract class BackingMatrix<E extends Number> {
 
     }
 
-    protected Object[] backingArray(){
+    protected Object[][] backingArray(){
         return matrix;
     }
     
@@ -73,10 +79,19 @@ public abstract class BackingMatrix<E extends Number> {
      * Copies this matrix. The copy should be identical, but unrelated to this
      * @return A new identical matrix
      */
-    protected Object[] copyBacking() {
-        Object[] copy = Arrays.copyOf(matrix, matrix.length);
-        return copy;
+    protected Object[][] copyBacking() {
+        
+        Object[][] array = new Object[rows][cols];
+        for (int i=0;i<rows;i++){
+            for (int j=0;j<cols;j++){
+                array[i][j] = get(i,j);
+            }
+        }
+        
+        return array;
     }
+    
+    
 
 
         /**
@@ -85,9 +100,9 @@ public abstract class BackingMatrix<E extends Number> {
      * @param j the colum of the element
      * @param k The new value to assign to it
      */
-    public void set(int i, int j, E k) {
+    public void set(int i, int j, N k) {
         //matrixlist.set(i*cols+j, k);
-        matrix[i * cols + j] = k;
+        matrix[i][j] = k;
     }
 
     /**
@@ -97,9 +112,9 @@ public abstract class BackingMatrix<E extends Number> {
      * @return The element in this location
      */
         @SuppressWarnings("unchecked")
-    public E get(int i, int j) {
+    public N get(int i, int j) {
         //return matrixlist.get(i*cols+j);
-        return (E) matrix[i * cols + j];
+        return (N) matrix[i][j];
     }
 
     /**
@@ -122,9 +137,11 @@ public abstract class BackingMatrix<E extends Number> {
      * Set every element in the matrix to k
      * @param k The value to assign to every element
      */
-    public void set(E k) {
-
-        Arrays.fill(matrix, k);
+    public void set(N k) {
+        for (Object[] ar : matrix){
+            Arrays.fill(ar, k);
+        }
+        
     }
     @SuppressWarnings("unchecked")
     @Override
@@ -132,8 +149,10 @@ public abstract class BackingMatrix<E extends Number> {
         if (!getClass().isAssignableFrom(o.getClass())){
             return false;
         }
-        BackingMatrix<E> that = (BackingMatrix<E>) o;
-        return Arrays.equals(this.backingArray(), that.backingArray());
+        BackingMatrix<N> that = (BackingMatrix<N>) o;
+        
+        return Arrays.deepEquals(
+                this.backingArray(), that.backingArray());
         
     }
 

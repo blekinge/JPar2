@@ -129,7 +129,7 @@ public class Matrix<N extends Number, F extends Field<N>> extends BackingMatrix<
      * @param field The field to do operations in
      * @param matrix The backing array
      */
-    public Matrix(int rows, int cols, F field, N[] matrix) throws MatrixDimensionException {
+    public Matrix(int rows, int cols, F field, N[][] matrix) throws MatrixDimensionException {
         super(rows,cols,matrix);
         this.field = field;
 
@@ -142,7 +142,7 @@ public class Matrix<N extends Number, F extends Field<N>> extends BackingMatrix<
      * @param field The field to do operations in
      * @throws javapar2.math.matrix.MatrixDimensionException
      */
-    private Matrix(int rows, int cols, F field, Object[] matrix) throws MatrixDimensionException{
+    private Matrix(int rows, int cols, F field, Object[][] matrix) throws MatrixDimensionException{
         super(rows,cols,matrix);
         this.field = field;
     }
@@ -242,7 +242,47 @@ public class Matrix<N extends Number, F extends Field<N>> extends BackingMatrix<
         }
     }
 
+    
+    @SuppressWarnings("unchecked")
+    public Vector<N> getRow(int rowIndex){
+        Object[] row = new Object[getCols()];
+        for (int i = 0; i < getCols(); i++){
+            row[i] = get(rowIndex,i);
+        }
+        return new Vector<N>(row);
+        
+    }
+    
+    @SuppressWarnings("unchecked")
+    public Vector<N> getColumn(int columnIndex){
 
+        Object[] row = new Object[getRows()];
+        for (int i = 0; i < getRows(); i++){
+            row[i] = get(i,columnIndex);
+        }
+        return new Vector<N>(row);
+    }
+    
+    public void setRow(int rowIndex, Vector<N> row) throws MatrixDimensionException{
+        if (row.length() != getCols()){
+            throw new MatrixDimensionException("Vector not correct length for the matrix");
+        }
+        for (int i = 0; i < getCols(); i++) {
+            set(rowIndex,i,row.get(i));
+        }
+    }
+    
+    public void setColumn(int columnIndex, Vector<N> column) throws MatrixDimensionException{
+        if (column.length() != getRows()){
+            throw new MatrixDimensionException("Vector not correct length for the matrix");
+        }
+        for (int i = 0; i < getRows(); i++) {
+            set(i,columnIndex,column.get(i));
+        }
+    }
+
+    
+    
     /**
      * Inverts this matrix. The matrix must be square. This matrix is not changed in the process.
      * @return The inverted matrix.

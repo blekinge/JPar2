@@ -25,6 +25,10 @@ public class Par2File {
         this.header_offset = header_offset;
     }
 
+    public void setLength(long newLength) throws IOException {
+        raf.setLength(newLength);
+    }
+
     public void write(byte[] data, long offset) throws IOException {
         raf.seek(header_offset+offset);
         raf.write(data);
