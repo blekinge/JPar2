@@ -127,7 +127,7 @@ public class GaloisField extends Field<Integer> {
     public Integer div(Integer a, Integer b) throws ArithmeticException {
         Integer diff_log;
         if (a == 0) {
-            return 0;
+            return ZERO;
         }
         if (b == 0) {
             throw new ArithmeticException("Division by zero");
@@ -142,13 +142,13 @@ public class GaloisField extends Field<Integer> {
     public Integer mult(Integer a, Integer b) {
         Integer sum_log;
         if (a == 0 || b == 0) {
-            return 0;
+            return ZERO;
         }
         sum_log = gflog[a] + gflog[b];
-        if (sum_log >= highest) {
-            sum_log -= highest;
-        }
-        return gfilog[sum_log];
+//        if (sum_log >= highest) {
+//            sum_log -= highest;
+//        }
+        return gfilog[sum_log % highest];
     }
 
     public Integer pow(Integer a, Integer b) {

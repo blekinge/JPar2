@@ -267,32 +267,34 @@ public class ReedSolomon {
                 dataSlices.size() + paritySlices.size(),
                 dataSlices.size(),
                 field);
-        System.out.println(disp);
+        //System.out.println(disp);
 
         int columns = (int) (slicesize / 2);
-
+        int rows = paritySlices.size();
+        
         Matrix<Integer, Field<Integer>> data =
                 readMatrixFromSlices(dataSlices, columns);
 
-        System.out.println(data);
+        //System.out.println(data);
         Matrix<Integer, Field<Integer>> parity = Matrix.mult(disp, data,
                                                              field);
 
-        System.out.println(parity);
+        //System.out.println(parity);
 
-
-
-        for (int i = 0; i < paritySlices.size(); i++) {//row number
-
+        int ndataslices = dataSlices.size();
+        for (int i = 0; i < rows; i++) {//row number
+            
+            Vector<Integer> row = parity.getRow(i+ndataslices);
+            
+            Par2Slice paritySlice = paritySlices.get(i);
+            
             for (int j = 0; j < columns; j++) {//column number
 
                 //now write out the contents again
 
-                Integer part = parity.get(i + dataSlices.size(), j);
+                byte[] blah = Bytes.toBytesB(row.get(j).shortValue());
 
-                byte[] blah = Bytes.toBytesB(part.shortValue());
-
-                paritySlices.get(i).write(blah);
+                paritySlice.write(blah);
 
 
             }

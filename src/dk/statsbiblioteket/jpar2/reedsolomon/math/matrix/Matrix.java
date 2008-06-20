@@ -38,6 +38,11 @@ public class Matrix<N extends Number, F extends Field<N>> extends BackingMatrix<
 
     protected final F field;
 
+    
+    
+    
+    
+    
     /**
      * Create a new Matrix with these dimensions. Allocate the space immediately.
      * @param rows Number of rows in the matrix
@@ -165,31 +170,26 @@ public class Matrix<N extends Number, F extends Field<N>> extends BackingMatrix<
      * @param b the right matrix
      * @param field The field in which to do the operations
      * @return the new multiplied matrix
+     * @throws dk.statsbiblioteket.jpar2.reedsolomon.math.matrix.MatrixDimensionException 
      * @throws javapar2.math.MatrixDimensionException if the rows of a is not equal to the cols of b
      */
     public static <E extends Number, F extends Field<E>> Matrix<E, F> mult(Matrix<E, F> a, Matrix<E, F> b, F field) throws MatrixDimensionException {
         if (a.getCols() != b.getRows()) {
             throw new MatrixDimensionException("Rows does not equal cols");
         }
-        
-
         Matrix<E, F> product = new Matrix<E, F>(a.getRows(), b.getCols(), field);
 
-
-
-        product.set(field.ZERO);
+        //product.set(field.ZERO);
 
         for (int i = 0; i < product.getRows(); i++) {//rows in product
             for (int j = 0; j < product.getCols(); j++) {//cols in product
-                E tmp = product.get(i, j);
-                for (int k = 0; k < a.getCols(); k++) {//the lines in a and b
-                    tmp = field.add(tmp, field.mult(a.get(i, k), b.get(k, j)));
-                }
-                product.set(i, j, tmp);
+                Vector<E> row = a.getRow(i);
+                Vector<E> col = b.getCol(j);
+                E e = Vector.dot(row,col,field);
+                product.set(i,j,e);
             }
         }
         return product;
-
     }
 
     /**
@@ -212,12 +212,10 @@ public class Matrix<N extends Number, F extends Field<N>> extends BackingMatrix<
      * @param from one row
      * @param to the other row
      */
-    public void swapRow(int from, int to) {
-        for (int k = 0; k < getCols(); k++) {
-            N tmp = get(from, k);//switch
-            set(from, k, get(to, k));
-            set(to, k, tmp);
-        }
+    public void swapRow(int from, int to) throws MatrixDimensionException {
+        Vector<N> temp = getRow(to);
+        setRow(to,getRow(from));
+        setRow(from,temp);
     }
 
     /**
@@ -242,26 +240,26 @@ public class Matrix<N extends Number, F extends Field<N>> extends BackingMatrix<
         }
     }
 
-    
-    @SuppressWarnings("unchecked")
-    public Vector<N> getRow(int rowIndex){
-        Object[] row = new Object[getCols()];
-        for (int i = 0; i < getCols(); i++){
-            row[i] = get(rowIndex,i);
-        }
-        return new Vector<N>(row);
-        
-    }
-    
-    @SuppressWarnings("unchecked")
-    public Vector<N> getColumn(int columnIndex){
-
-        Object[] row = new Object[getRows()];
-        for (int i = 0; i < getRows(); i++){
-            row[i] = get(i,columnIndex);
-        }
-        return new Vector<N>(row);
-    }
+//    
+//    @SuppressWarnings("unchecked")
+//    public Vector<N> getRow(int rowIndex){
+//        Object[] row = new Object[getCols()];
+//        for (int i = 0; i < getCols(); i++){
+//            row[i] = get(rowIndex,i);
+//        }
+//        return new Vector<N>(row);
+//        
+//    }
+//    
+//    @SuppressWarnings("unchecked")
+//    public Vector<N> getColumn(int columnIndex){
+//
+//        Object[] row = new Object[getRows()];
+//        for (int i = 0; i < getRows(); i++){
+//            row[i] = get(i,columnIndex);
+//        }
+//        return new Vector<N>(row);
+//    }
     
     public void setRow(int rowIndex, Vector<N> row) throws MatrixDimensionException{
         if (row.length() != getCols()){

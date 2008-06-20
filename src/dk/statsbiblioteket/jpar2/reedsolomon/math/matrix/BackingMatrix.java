@@ -32,6 +32,10 @@ public abstract class BackingMatrix<N extends Number> {
     
     private Object[][] matrix;
     
+    
+    
+    private Object[][] matrix_transposed;
+    
 
 
     
@@ -45,10 +49,24 @@ public abstract class BackingMatrix<N extends Number> {
     protected  BackingMatrix(int rows, int cols) {
         //matrixlist = new ArrayList<E>(rows*cols);
         matrix = new Object[rows][cols];//hack that produces warning, in order to make array
+        matrix_transposed = new Object[cols][rows];
         this.cols = cols;
         this.rows = rows;
     }
     
+    
+    private Object[][] transpose(Object[][] matrix){
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        
+        Object[][] transposed = new Object[cols][rows];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                transposed[j][i] = matrix[i][j];
+            }
+        }
+        return transposed;
+    }
     
     /**
      * Takes the backing array as input. Performs some sanity checks on it
@@ -66,6 +84,7 @@ public abstract class BackingMatrix<N extends Number> {
             throw new MatrixDimensionException("The backing array does not match the specified dimensions");
         }
         this.matrix = matrix;
+        this.matrix_transposed = transpose(matrix);
         this.cols = cols;
         this.rows = rows;
 
@@ -87,7 +106,6 @@ public abstract class BackingMatrix<N extends Number> {
                 array[i][j] = get(i,j);
             }
         }
-        
         return array;
     }
     
@@ -103,6 +121,7 @@ public abstract class BackingMatrix<N extends Number> {
     public void set(int i, int j, N k) {
         //matrixlist.set(i*cols+j, k);
         matrix[i][j] = k;
+        matrix_transposed[j][i] = k;
     }
 
     /**
@@ -124,6 +143,16 @@ public abstract class BackingMatrix<N extends Number> {
     public int getCols() {
         return cols;
     }
+    
+    @SuppressWarnings("unchecked")
+    public Vector<N> getRow(int i){
+        return new Vector<N>(matrix[i]);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public Vector<N> getCol(int j){
+        return new Vector<N>(matrix_transposed[j]);
+    }
 
     /**
      * Get the number of rows of the matrix
@@ -141,6 +170,10 @@ public abstract class BackingMatrix<N extends Number> {
         for (Object[] ar : matrix){
             Arrays.fill(ar, k);
         }
+        for (Object[] ar : matrix_transposed) {
+            Arrays.fill(ar, k);
+        }
+
         
     }
     @SuppressWarnings("unchecked")
