@@ -45,22 +45,23 @@ public class VandermondeMatrixTest extends TestCase {
         super.tearDown();
     }
 
-    public void testFormat() throws MatrixDimensionException  {
+    public void testFormat() throws MatrixDimensionException {
 
-        Integer[] ba = {//Taken from "Correction to the 1997  Tutorial on Reed-Solomon Coding."
-            1, 0, 0,
-            1, 1, 1,
-            1, 2, 4,
-            1, 3, 5,
-            1, 4, 3,
-            1, 5, 2
-        };
+        Integer[][] ba = {//Taken from "Correction to the 1997  Tutorial on Reed-Solomon Coding."
+            {1, 0, 0},
+            {1, 1, 1},
+            {1, 2, 4},
+            {1, 3, 5},
+            {1, 4, 3},
+            {1, 5, 2}};
 
         int rows = 6;
         int cols = 3;
         Field<Integer> field = new GaloisField(GaloisField.WordSize.FOUR);
-        Matrix<Integer, Field<Integer>> vmd = new VandermondeMatrix(rows, cols, field);
-        Matrix<Integer, Field<Integer>> comparisson = new Matrix<Integer, Field<Integer>>(rows, cols, field, ba);
+        Matrix<Integer, Field<Integer>> vmd = new VandermondeMatrix(rows, cols,
+                                                                    field);
+        Matrix<Integer, Field<Integer>> comparisson =
+                new Matrix<Integer, Field<Integer>>(rows, cols, field, ba);
         assertEquals(comparisson, vmd);
     }
 }

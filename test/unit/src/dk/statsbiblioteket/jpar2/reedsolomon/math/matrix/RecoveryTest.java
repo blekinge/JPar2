@@ -50,13 +50,13 @@ public class RecoveryTest extends TestCase {
 
         Field<Integer> field = new GaloisField(GaloisField.WordSize.EIGHT);
 
-        Integer[] matrix = new Integer[]{
-            11,
-            2,
-            3,
-            44,
-            5,
-            6
+        Integer[][] matrix = new Integer[][]{
+            {11},
+            {2},
+            {3},
+            {44},
+            {5},
+            {6}
         };
 
 
@@ -104,10 +104,10 @@ public class RecoveryTest extends TestCase {
 
         
 
-        Integer[] matrix2 = new Integer[data.getRows()];
+        Integer[][] matrix2 = new Integer[data.getRows()][1];
         
         for (int i=0; i<matrix2.length; i++)        {
-            matrix2[i] = parity.get(0,id[i]);
+            matrix2[i][0] = parity.get(id[i],0);
         }
         
         if (matrix2.length != data.getRows()){

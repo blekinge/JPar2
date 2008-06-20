@@ -47,13 +47,13 @@ public class DispersalMatrixTest extends TestCase {
         Field<Integer> field = new GaloisField(GaloisField.WordSize.FOUR);
         int rows = 6;
         int cols = 3;
-        Integer[] ba = {//Taken from "Note: Correction to the 1997 Tutorial on Reed-Solomon Coding."
-            1, 0, 0,
-            0, 1, 0,
-            0, 0, 1,
-            1, 1, 1,
-            15, 8, 6,
-            14, 9, 6
+        Integer[][] ba = {//Taken from "Note: Correction to the 1997 Tutorial on Reed-Solomon Coding."
+            {1, 0, 0},
+        {0, 1, 0},
+            {0, 0, 1},
+            {1, 1, 1},
+            {15, 8, 6},
+            {14, 9, 6}
         };
 
 

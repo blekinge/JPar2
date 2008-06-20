@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
+import java.util.Random;
 
 
 /**
@@ -24,7 +25,12 @@ import java.io.RandomAccessFile;
  */
 public class ReedSolomonTest extends TestCase {
     
-    long sliceSize = 16;
+    long sliceSize = 4*100;
+    
+    int afile_length = (int) (sliceSize * 10 + (186%sliceSize));
+    int bfile_length = (int) (sliceSize * 25+(435%sliceSize));
+    
+    int parityfile_length = (int) (sliceSize * 26);
     
     public ReedSolomonTest(String testName) {
         super(testName);
@@ -35,11 +41,13 @@ public class ReedSolomonTest extends TestCase {
 
         super.setUp();
         
-        byte[] abuf = new byte[(int)sliceSize*2+3];
-        Arrays.fill(abuf, (byte)64);
-
-        byte[] bbuf = new byte[(int)sliceSize*2];
-        Arrays.fill(bbuf, (byte)68);
+        Random rnd = new Random();
+        
+        byte[] abuf = new byte[afile_length];
+        rnd.nextBytes(abuf);
+        
+        byte[] bbuf = new byte[bfile_length];
+        rnd.nextBytes(bbuf);
         
         File testFileA = new File("testfile1.txt");
         testFileA.createNewFile();
@@ -75,6 +83,7 @@ public class ReedSolomonTest extends TestCase {
      */
     public void testGenerateParity() throws Exception{
         
+
         ReedSolomon rd = new ReedSolomon(sliceSize);
         
         Par2File afile = new Par2File(new RandomAccessFile("testfile1.txt", "r"), sliceSize);
@@ -104,9 +113,9 @@ public class ReedSolomonTest extends TestCase {
         
         byte[] data = new byte[(int)sliceSize*2];
         parfile.read(data, 0);
-        for (int i=0;i<data.length;i++){
-            System.out.println(data[i]);
-        }
+//        for (int i=0;i<data.length;i++){
+//            System.out.println(data[i]);
+//        }
 
     }
 
@@ -116,70 +125,68 @@ public class ReedSolomonTest extends TestCase {
     public void testTestRecovery() throws Exception {
         ReedSolomon rd = new ReedSolomon(sliceSize);
         
-        Par2File afile = new Par2File(new RandomAccessFile("testfile1.txt", "r"), sliceSize);
-        Par2Slice[] aslices = afile.getSlices();
-        for (Par2Slice slice: aslices){
-            rd.addDataSlice(slice);
-        }
+        File testdatafile1 = new File("testfile1.txt");
+
+        File testdatafile2 = new File("testfile2.txt");
+
+        File testparityfile1 = new File("TestParityFile1.txt");
+        testparityfile1.createNewFile();
+        testparityfile1.deleteOnExit();
+
+        File testrestoredfile1 = new File("TestrestoredFile1.txt");
+        testrestoredfile1.createNewFile();
+        testrestoredfile1.deleteOnExit();
+        
+
+        
+        
+        Par2File afile = new Par2File(new RandomAccessFile(testdatafile1, "r"), sliceSize);
+        rd.addDataFile(afile);
 
         Par2File bfile =
-                new Par2File(new RandomAccessFile("testfile2.txt", "r"),
+                new Par2File(new RandomAccessFile(testdatafile2, "r"),
                              sliceSize);
-        Par2Slice[] bslices = bfile.getSlices();
-        for (Par2Slice slice: bslices){
-            rd.addDataSlice(slice);
-        }
+        rd.addDataFile(bfile);
 
-        File testFileB = new File("testoutfile1.txt");
-        testFileB.createNewFile();
-        testFileB.deleteOnExit();
-        Par2File parfile = new Par2File(new RandomAccessFile(testFileB, "rw"), sliceSize);
-        rd.addParitySlice(new Par2Slice(parfile, 0, sliceSize));
-        rd.addParitySlice(new Par2Slice(parfile, sliceSize, sliceSize));
+        Par2File parfile = new Par2File(new RandomAccessFile(testparityfile1, "rw"), sliceSize);
+        parfile.setLength(parityfile_length);
+        rd.addParityFile(parfile);
         
         
         rd.generateParitySlices();
         
+        //The parity information is now stored in testparityfile1
+        
         
         rd = new ReedSolomon(sliceSize);
-        afile = new Par2File(new RandomAccessFile("testfile1.txt", "r"), sliceSize);
-        aslices = afile.getSlices();
-        for (Par2Slice slice: aslices){
-            rd.addDataSlice(slice);
-        }
         
-        Par2File bfile_recovered =
-                new Par2File(new RandomAccessFile("testfile2_recovered.txt", "rw"),
-                             sliceSize);
-        Par2Slice[] bslices_recovered = bfile.getSlices();
-        for (Par2Slice slice: bslices_recovered){
-            rd.addLostSlice(slice);
-        }
+        
+        afile = new Par2File(new RandomAccessFile(testdatafile1, "r"), sliceSize);
+        rd.addDataFile(afile);
+        
 
         
-        parfile = new Par2File(new RandomAccessFile(testFileB, "rw"), sliceSize);
-        Par2Slice[] parslices = parfile.getSlices();
-        for (Par2Slice slice: parslices){
-            rd.addParitySlice(slice);
-        }
+        Par2File bfile_recovered =
+                new Par2File(new RandomAccessFile(testrestoredfile1, "rw"),
+                             sliceSize);
+        bfile_recovered.setLength(bfile_length);
+        rd.addLostFile(bfile_recovered);
+        
+
+        parfile = new Par2File(new RandomAccessFile(testparityfile1, "r"), sliceSize);
+        rd.addParityFile(parfile);
         
         rd.recoverLostSlices();
         
-
         
-        byte[] data = new byte[(int)sliceSize*2];
+
+        byte[] data = new byte[bfile_length];
         bfile.read(data, 0);
-        for (int i=0;i<data.length;i++){
-            System.out.println(data[i]);
-        }
+        byte[] data_recovered = new byte[bfile_length];
+        bfile_recovered.read(data_recovered, 0);
+ 
+        assertTrue(Arrays.equals(data, data_recovered));
         
-        
-        data = new byte[(int)sliceSize*2];
-        bfile_recovered.read(data, 0);
-        for (int i=0;i<data.length;i++){
-            System.out.println(data[i]);
-        }
-
         
         
         

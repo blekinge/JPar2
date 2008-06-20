@@ -52,10 +52,10 @@ public class CondensedDispersalMatrixTest extends TestCase {
 
     public void testCondense() throws MatrixDimensionException, MatrixException, NotRecoverableException {
         Field<Integer> field = new GaloisField(GaloisField.WordSize.FOUR);
-        Integer[] ba = {//Taken from "Note: Correction to the 1997 Tutorial on Reed-Solomon Coding."
-            1, 1, 1,
-            14, 9, 6,
-            0, 0, 1
+        Integer[][] ba = {//Taken from "Note: Correction to the 1997 Tutorial on Reed-Solomon Coding."
+            {1, 1, 1},
+            {14, 9, 6},
+            {0, 0, 1}
         };
         Matrix<Integer, Field<Integer>> comp =
                 new Matrix<Integer, Field<Integer>>(3, 3, field, ba);
